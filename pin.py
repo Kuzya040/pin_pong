@@ -11,8 +11,8 @@ bk = transform.scale(image2,(950,650))
 display.set_caption("pin pong") #?   название программы
 font.init()
 text = font.SysFont('Arial',36)
-speed_x = 5
-speed_y = 5
+speed_x = 20
+speed_y = 20
 text  = font.SysFont('arial',40)
 loser = text.render('игрок 1 проиграл',1,(255,255,255))
 loser1 = text.render('игрок 2 проиграл',1,(255,255,255))
@@ -28,7 +28,6 @@ class GameSprite(sprite.Sprite):
         self.rect.y = player_y
     def reset(self):
         win.blit(self.image,(self.rect.x, self.rect.y))
-
 class Player(GameSprite):
     def update_left(self):
         keys = key.get_pressed()
@@ -42,8 +41,8 @@ class Player(GameSprite):
             self.rect.y -= self.speed
         if keys[K_s] and self.rect.x < 950 - 80:
             self.rect.y += self.speed
-platform_left = Player(image3,1,300,70,220,5)
-platform_rigth = Player(image4,850,300,70,220,5)
+platform_left = Player(image3,1,300,70,220,20)
+platform_rigth = Player(image4,850,300,70,220,20)
 ball = GameSprite(image1,400,250,100,100,0)
 while not game:
     for i in event.get():

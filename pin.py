@@ -21,7 +21,6 @@ minus_r = False
 minus_l = False
 
 
-text  = font.SysFont('arial',40)
 loser = text.render('игрок 1 проиграл',1,(255,255,255))
 loser1 = text.render('игрок 2 проиграл',1,(255,255,255))
 game = False
@@ -52,14 +51,24 @@ class Player(GameSprite):
 platform_left = Player(image3,1,300,70,220,11)
 platform_rigth = Player(image4,850,300,70,220,11)
 ball = GameSprite(image1,400,250,100,100,0)
+timer = 40
 while not game:
-   
+    win.blit(bk,(0,0))
+    if timer > 0:
+        privet = text.render('Игра началась',1,(255,255,255))  
+        win.blit(privet,(300,300))
+        finish = True
+        timer-=1
+    else:
+        finish = False
+
+
+    
     for i in event.get():
         if i.type == QUIT:
             game = True
 
     if not finish:
-        win.blit(bk,(0,0))
         heart1 = text.render('жизней'+' '+str(heart_l),1,(255,255,255))
         heart2 = text.render('жизней'+' '+str(heart_r),1,(255,255,255))
         win.blit(heart1,(0,0))
@@ -100,6 +109,18 @@ while not game:
         if minus_l:
             sleep(0.1)
             heart_l -=1
+            minus_l = False
+        if keys[K_l]:
+            minus_r = True
+        if minus_r:
+            sleep(0.1)
+            heart_r +=1
+            minus_r = False
+        if keys[K_k]:
+            minus_l = True
+        if minus_l:
+            sleep(0.1)
+            heart_l +=1
             minus_l = False
     display.update()
     time.delay(20)

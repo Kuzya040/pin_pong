@@ -11,8 +11,10 @@ bk = transform.scale(image2,(950,650))
 display.set_caption("pin pong") #?   название программы
 font.init()
 text = font.SysFont('Arial',36)
-speed_x = 20
-speed_y = 20
+speed_x = 12
+speed_y = 12
+heart_l = 3
+heart_r = 3
 text  = font.SysFont('arial',40)
 loser = text.render('игрок 1 проиграл',1,(255,255,255))
 loser1 = text.render('игрок 2 проиграл',1,(255,255,255))
@@ -41,15 +43,19 @@ class Player(GameSprite):
             self.rect.y -= self.speed
         if keys[K_s] and self.rect.x < 950 - 80:
             self.rect.y += self.speed
-platform_left = Player(image3,1,300,70,220,20)
-platform_rigth = Player(image4,850,300,70,220,20)
+platform_left = Player(image3,1,300,70,220,11)
+platform_rigth = Player(image4,850,300,70,220,11)
 ball = GameSprite(image1,400,250,100,100,0)
 while not game:
+    heart1 = text.render('жизней'+' '+str(heart_l),1,(255,255,255))
+    heart2 = text.render('жизней'+' '+str(heart_r),1,(255,255,255))
     for i in event.get():
         if i.type == QUIT:
             game = True
     if not finish:
         win.blit(bk,(0,0))
+        win.blit(heart1,(0,0))
+        win.blit(heart2,(700,0))
         platform_left.update_right()
         platform_rigth.update_left()
         platform_left.reset()
@@ -63,10 +69,17 @@ while not game:
         if sprite.collide_rect(platform_left,ball) or sprite.collide_rect(platform_rigth,ball):
             speed_x *= -1
         if ball.rect.x <0:
+            heart_l -=1
+            ball = GameSprite(image1,400,250,100,100,0)
+        if ball.rect.x > 870:
+            heart_r -=1
+            ball = GameSprite(image1,400,250,100,100,0)
+        if heart_l <=0:
             win.blit(loser,(225,325))
             finish = True
-        if ball.rect.x > 870:
+        if heart_r <=0:
             win.blit(loser1,(225,325))
             finish = True
+
     display.update()
     time.delay(20)

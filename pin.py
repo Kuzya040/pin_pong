@@ -1,5 +1,7 @@
+from time import sleep
 from pygame import *
 from random import randint
+
 clock = time.Clock()
 image1 = image.load('pngwing.com (2).png')
 image2 = image.load('pngwing.com (4).png')
@@ -15,6 +17,10 @@ speed_x = 12
 speed_y = 12
 heart_l = 3
 heart_r = 3
+minus_r = False
+minus_l = False
+
+
 text  = font.SysFont('arial',40)
 loser = text.render('игрок 1 проиграл',1,(255,255,255))
 loser1 = text.render('игрок 2 проиграл',1,(255,255,255))
@@ -47,14 +53,15 @@ platform_left = Player(image3,1,300,70,220,11)
 platform_rigth = Player(image4,850,300,70,220,11)
 ball = GameSprite(image1,400,250,100,100,0)
 while not game:
-    heart1 = text.render('жизней'+' '+str(heart_l),1,(255,255,255))
-    heart2 = text.render('жизней'+' '+str(heart_r),1,(255,255,255))
+   
     for i in event.get():
         if i.type == QUIT:
             game = True
 
     if not finish:
         win.blit(bk,(0,0))
+        heart1 = text.render('жизней'+' '+str(heart_l),1,(255,255,255))
+        heart2 = text.render('жизней'+' '+str(heart_r),1,(255,255,255))
         win.blit(heart1,(0,0))
         win.blit(heart2,(700,0))
         platform_left.update_right()
@@ -83,8 +90,16 @@ while not game:
             finish = True
         keys = key.get_pressed()
         if keys[K_q]:
+            minus_r = True
+        if minus_r:
+            sleep(0.1)
             heart_r -=1
+            minus_r = False
         if keys[K_r]:
+            minus_l = True
+        if minus_l:
+            sleep(0.1)
             heart_l -=1
+            minus_l = False
     display.update()
     time.delay(20)

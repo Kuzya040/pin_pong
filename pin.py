@@ -84,7 +84,7 @@ while not game:
         keys = key.get_pressed()
         if keys[K_q]:
             heart_r -=1
-        if keys[K_w]:
+        if keys[K_r]:
             heart_l -=1
     display.update()
     time.delay(20)

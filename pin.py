@@ -52,6 +52,7 @@ while not game:
     for i in event.get():
         if i.type == QUIT:
             game = True
+
     if not finish:
         win.blit(bk,(0,0))
         win.blit(heart1,(0,0))
@@ -80,6 +81,10 @@ while not game:
         if heart_r <=0:
             win.blit(loser1,(225,325))
             finish = True
-
+        keys = key.get_pressed()
+        if keys[K_q]:
+            heart_r -=1
+        if keys[K_w]:
+            heart_l -=1
     display.update()
     time.delay(20)
